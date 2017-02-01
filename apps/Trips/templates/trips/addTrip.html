@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Add Trip</title>
+    <link rel="stylesheet" href="{% static 'Trips/css/trips.css' %}"media="screen"  charset="utf-8">
+
+</head>
+<body>
+<div id="wrapper">
+    <div id="topright">
+        <a href="{% url 'Trips:dashboard' %}">Home</a>
+        <a href="{% url 'Trips:logout' %}">Logout</a>
+    </div>
+    <h1>Add a Trip<h1>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class={{message.tags}} {% endif %}>{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form action="{%url 'Trips:addTrip' %}" method='post'>
+            {% csrf_token %}
+            <p><label for="destination">Destination:</label>
+            <input type="text" name="destination" class="longer" required></p>
+            <p><label for="Description">Description:</label>
+            <input type="text" name="description" class="longer"required></p>
+            <p><label for="dateto">Travel Date From:</label>
+            <input class="datefrom" type="date" name="datefrom" required></p>
+            <p><label for="dateto">Travel Date To:</label>
+            <input class="dateto" type="date" name="dateto" required></p>
+            <p><input type="submit" value="Add"></p>
+        </form>
+</div>
+</body>
+</html>

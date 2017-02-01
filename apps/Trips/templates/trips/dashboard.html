@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Trips</title>
+    <link rel="stylesheet" href="{% static 'Trips/css/trips.css' %}"media="screen"  charset="utf-8">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="topright">
+            <a href="{%url 'Trips:logout'  %}">Logout</a>
+        </div>
+        <h1>Welcome, {{request.session.name}}</h1>
+
+        <h1>Your Trip Schedules</h1>
+        <table>
+            <thead>
+                <tr>
+                <td>Destination</td><td>Travel Start Date</td><td>Travel End Date</td><td>Plan</td>
+            </tr>
+            </thead>
+            <tbody>
+                {% for destination in destinations %}
+                <tr>
+                <td><a href="{% url 'Trips:destination' id=destination.trip_destination_id owner_id=destination.trip_destination.owner.id%}"> {{destination.trip_destination.destination}}</a></td><td>{{destination.trip_destination.datefrom}}</td><td><{{destination.trip_destination.dateto }}</td><td>{{destinaton.trip_destination.description }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h1>Other User's Travel Plans</h1>
+        <table>
+            <thead>
+                <tr>
+                <td>Name</td><td>Destination</td><td>Travel Start Date</td><td>Travel End Date</td><td>Do You Want to Join?</td>
+            </tr>
+            </thead>
+            <tbody>
+                {% for trip_user in trip_users %}
+                <tr>
+                <td><a href="{% url 'Trips:destination' id=trip_user.id owner_id=trip_user.owner.id %}"> {{trip_user.destination}}</a></td><td>{{trip_user.datefrom}}</td><td><{{trip_user.dateto }}</td><td>{{trip_user.description }}</td><td><a href='{% url "Trips:join" id=trip_user.id %}'>Join</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'Trips:addTrip' %}" value="AddTrip">Add Trip </a>
+    </div>
+</body>
+</html>

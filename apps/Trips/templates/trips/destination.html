@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'Trips/css/travelPlans.css' %}"media="screen"  charset="utf-8">
+    <title>Destination</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="topright">
+            <a href="{% url 'Trips:dashboard' %}">Home</a>
+            <a href="{% url 'Trips:logout' %}">Logout</a>
+        </div>
+        <h1>Trip Destination</h1>
+            <h3>{{destinations.destination}}</h3>
+                <p>Planned By: {{destinations.owner.name}}</p>
+                <p>Description: {{destinations.description}}</p>
+                <p>Travel Date From: {{destinations.datefrom}}</p>
+                <p>Trave Date To: {{destinations.dateto}}</p>
+            <h3>Other users joining the trip:</h3>
+
+
+
+            {% for trip_user in trip_users %}
+            {%  if trip_user.trip_user.id != destinations.owner.id %}
+                <p>{{trip_user.trip_user.name}}</p>
+                {% endif %}
+            {% endfor %}
+
+        <a href="{% url 'Trips:addTrip' %}" value="goback">Enter another trip! </a>
+    </div>
+</body>
+</html>

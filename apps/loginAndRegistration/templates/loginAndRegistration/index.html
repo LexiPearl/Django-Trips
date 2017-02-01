@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="{% static 'loginAndRegistration/css/loginAndRegistration.css' %}"media="screen"  charset="utf-8">
+</head>
+<body>
+    <div id="wrapper">
+        <h1>Login and Registration</h1>
+        {% if messages %}
+        <ul class="messages">
+        {%for message in messages%}
+        <li {% if message.tags %} class={{message.tags}} {% endif %}>{{message}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        <h3>Register Below!</h3>
+        <form action="{% url 'loginAndRegistration:register' %}" method='post'>
+            {% csrf_token %}
+            <p> Name: <input class="longer" type='text' name='name' placeholder="cannot contain numbers" required></p>
+            <p>Username: <input class="longer" type='text' name='username' placeholder="enter a valid username" required></p>
+            <p>Password: <input class="longer" type='password' name='password' placeholder="must be at least 8 characters" required></p>
+            <p>Confirm Password: <input class="longer" type='password' name='password_confirmation' placeholder="must be at least 8 characters" required=""></p>
+            <input class="submit" type='submit' value='Create User'>
+        </form>
+        <h3>Already Registered?</h3>
+        <form action="{% url 'loginAndRegistration:login' %}" method='post'>
+            {% csrf_token %}
+            <p>Username: <input class="longer" type='text' name='username'></p>
+            <p>Password: <input class="longer" type='password' name='password'></p>
+            <input type='submit' value='Login'>
+        </form>
+    </div>
+</body>
+</html>
